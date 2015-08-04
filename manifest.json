@@ -1,0 +1,75 @@
+{
+    "extension": 
+    {
+        "name": "-",
+        "version": "1.0.0",
+        "description": "tests",
+        "icon": "test.png",
+        "senders": [
+            {
+                "location": "studioToolbar", 
+                "icon": "arrow.png",
+                "tips": "Configure preview",
+                "menu": [
+                    { "actionName": "chromePreview" },
+                    { "actionName": "studioPreview" },
+                    { "separator": {} },
+                    { "actionName": "android" },
+                    { "actionName": "ios" }
+                ]
+            },
+            {
+                "location": "studioToolbar", 
+		    	"actionName": "launchPreview",
+                "icon": "test.png",
+                "tips": "Test"
+            }
+        ],
+        "actions": [
+            {
+                "name": "studioStartHandler",
+                "title": "studio start handler",
+                "trigger": [
+                    { "event": "onStudioStart" }
+                ]
+            },
+            {
+                "name": "solutionOpenedHandler",
+                "title": "solution opened handler",
+                "trigger": [
+                    { "event": "onSolutionOpened" }
+                ]
+            },
+            {
+                "name": "solutionClosedHandler",
+                "title": "solution closed handler",
+                "trigger": [
+                    { "event": "onSolutionClosed" }
+                ]
+            },
+            {
+                "name": "launchPreview",
+                "title": "Test"
+            },
+            {
+                "name": "studioPreview",
+                "title": "Preview in Studio"
+            },
+            {
+                "name": "chromePreview",
+                "title": "Preview in Chrome"
+            },
+            {
+                "name": "android",
+                "title": "Android"
+            },
+            {
+                "name": "ios",
+                "title": "iOS"
+            }
+
+
+        ],
+        "lifetime": "action_lifetime"
+    }
+}
