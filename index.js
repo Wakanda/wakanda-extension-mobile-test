@@ -116,8 +116,8 @@ actions.launchPreview = function() {
     studio.sendCommand('MobileAPI.invokeCommand.' + Base64.encode(JSON.stringify(cmd)));
 
     if(! settings.chromePreview) {
-        studio.extension.registerTabPage('http://localhost:8100/' + opt[settings.selected].prefix, opt[settings.selected].icon || '', opt[settings.selected].title)
-	    studio.extension.openPageInTab('http://localhost:8100/' + opt[settings.selected].prefix, opt[settings.selected].title, false);
+        studio.extension.registerTabPage('http://127.0.0.1:8100/' + opt[settings.selected].prefix, opt[settings.selected].icon || '', opt[settings.selected].title)
+	    studio.extension.openPageInTab('http://127.0.0.1:8100/' + opt[settings.selected].prefix, opt[settings.selected].title, false);
     }
 
 	return true;
