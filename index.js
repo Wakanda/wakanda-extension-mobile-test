@@ -87,7 +87,8 @@ actions.launchPreview = function() {
         'android-ios': {
             cmd_opt: '--lab',
             prefix: 'ionic-lab',
-            title: 'Android & iOS'
+            title: 'iOS / Android',
+            icon: 'iosandroid.png'
         },
         'android': {
             cmd_opt: '--platform android',
@@ -104,7 +105,8 @@ actions.launchPreview = function() {
         'app': {
             cmd_opt: '',
             prefix: '#/tab/dash',
-            title: 'Mobile App'
+            title: 'Mobile App',
+            icon: 'app.png'
         }
     }
 
