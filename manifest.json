@@ -9,18 +9,33 @@
             {
                 "location": "studioToolbar", 
                 "icon": "arrow.png",
+                "tips": "Configure Run",
+                "menu": [
+                    { "actionName": "androidRun" },
+                    { "actionName": "iosRun" }
+                ]
+            },
+            {
+                "location": "studioToolbar", 
+		    	"actionName": "launchRun",
+                "icon": "run.png",
+                "tips": "Run"
+            },
+            {
+                "location": "studioToolbar", 
+                "icon": "arrow.png",
                 "tips": "Configure preview",
                 "menu": [
                     { "actionName": "chromePreview" },
                     { "actionName": "studioPreview" },
                     { "separator": {} },
-                    { "actionName": "android" },
-                    { "actionName": "ios" }
+                    { "actionName": "androidTest" },
+                    { "actionName": "iosTest" }
                 ]
             },
             {
                 "location": "studioToolbar", 
-		    	"actionName": "launchPreview",
+		    	"actionName": "launchTest",
                 "icon": "test.png",
                 "tips": "Test"
             }
@@ -48,7 +63,7 @@
                 ]
             },
             {
-                "name": "launchPreview",
+                "name": "launchTest",
                 "title": "Test"
             },
             {
@@ -60,15 +75,25 @@
                 "title": "Preview in Chrome"
             },
             {
-                "name": "android",
+                "name": "androidTest",
                 "title": "Android"
             },
             {
-                "name": "ios",
+                "name": "iosTest",
+                "title": "iOS"
+            },
+            {
+                "name": "launchRun",
+                "title": "Run"
+            },
+            {
+                "name": "androidRun",
+                "title": "Android"
+            },
+            {
+                "name": "iosRun",
                 "title": "iOS"
             }
-
-
         ],
         "lifetime": "action_lifetime"
     }

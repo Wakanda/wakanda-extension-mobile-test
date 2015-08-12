@@ -1,59 +1,73 @@
-var shell = require("./js/shellWorker.js");
-include("./js/base64.js");
+var Base64 = require("../lib/base64").Base64;
+var utils = require("../lib/utils");
 
 var actions = {};
 
-function enableTestings(enable) {
-    studio.setActionEnabled('launchPreview', !! enable);
+function enableTools(enable) {
+    "use strict";
 
-    studio.setActionEnabled('chromePreview', !! enable);
-    studio.setActionEnabled('studioPreview', !! enable);
-    studio.setActionEnabled('android', !! enable);
-    studio.setActionEnabled('ios', !! enable);
+    ['launchTest', 'chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+     'launchRun', 'androidRun', 'iosRun'].forEach(function(elm) {
+        studio.setActionEnabled(elm, !! enable);
+     });
 }
 
 
 actions.studioPreview = function() {
+    "use strict";
     var checked = studio.isMenuItemChecked('studioPreview');
     studio.checkMenuItem('studioPreview', ! checked);
     studio.checkMenuItem('chromePreview', false);
 };
 
 actions.chromePreview = function() {
+    "use strict";
     var checked = studio.isMenuItemChecked('chromePreview');
     studio.checkMenuItem('chromePreview', ! checked);
     studio.checkMenuItem('studioPreview', false);
 };
 
-actions.android = function() {
-    studio.checkMenuItem('android', ! studio.isMenuItemChecked('android'));
+actions.androidRun = function() {
+    studio.checkMenuItem('androidRun', ! studio.isMenuItemChecked('androidRun'));
 };
 
-actions.ios = function() {
-    studio.checkMenuItem('ios', ! studio.isMenuItemChecked('ios'));
+actions.iosRun = function() {
+    studio.checkMenuItem('iosRun', ! studio.isMenuItemChecked('iosRun'));
+};
+
+actions.androidTest = function() {
+    "use strict";
+    studio.checkMenuItem('androidTest', ! studio.isMenuItemChecked('androidTest'));
+};
+
+actions.iosTest = function() {
+    "use strict";
+    studio.checkMenuItem('iosTest', ! studio.isMenuItemChecked('iosTest'));
 };
 
 
 actions.studioStartHandler = function() {
-    enableTestings(false);
+    "use strict";
+    enableTools(false);
 };
 
 actions.solutionOpenedHandler = function() {
-    enableTestings(true);
+    "use strict";
+    enableTools(true);
 
     actions.chromePreview();
 };
 
 actions.solutionClosedHandler = function() {
-    enableTestings(false);
+    "use strict";
+    enableTools(false);
 };
 
 
 exports.handleMessage = function handleMessage(message) {
 	"use strict";
-	var actionName;
 
-	actionName = message.action;
+	var actionName = message.action;
 
 	if (!actions.hasOwnProperty(actionName)) {
 		return false;
@@ -61,73 +75,36 @@ exports.handleMessage = function handleMessage(message) {
 	actions[actionName](message);
 };
 
-actions.launchPreview = function() {
+actions.launchTest = function() {
 	"use strict";
 
+    var config = {};
 
-    var settings = {};
+    if(studio.isMenuItemChecked('androidTest') && studio.isMenuItemChecked('iosTest')) {
+        config.selected = 'android-ios';
 
-    if(studio.isMenuItemChecked('android') && studio.isMenuItemChecked('ios')) {
-        settings.selected = 'android-ios';
+    } else if(studio.isMenuItemChecked('androidTest')) {
+        config.selected = 'android';
 
-    } else if(studio.isMenuItemChecked('android')) {
-        settings.selected = 'android';
-
-    } else if(studio.isMenuItemChecked('ios')) {
-        settings.selected = 'ios';
+    } else if(studio.isMenuItemChecked('iosTest')) {
+        config.selected = 'ios';
 
     } else {
-        settings.selected = 'app';
+        config.selected = 'app';
     }
     
-    settings.chromePreview = studio.isMenuItemChecked('chromePreview');
+    config.chromePreview = studio.isMenuItemChecked('chromePreview');
 
-
-    var opt = {
-        'android-ios': {
-            cmd_opt: '--lab',
-            prefix: 'ionic-lab',
-            title: 'iOS / Android',
-            icon: 'iosandroid.png'
-        },
-        'android': {
-            cmd_opt: '--platform android',
-            prefix: '?ionicplatform=android#/tab/dash',
-            title: 'Android',
-            icon: 'android.png'
-        },
-        'ios': {
-            cmd_opt: '--platform ios',
-            prefix: '?ionicplatform=ios#/tab/dash',
-            title: 'iOS',
-            icon: 'ios.png'
-        },
-        'app': {
-            cmd_opt: '',
-            prefix: '#/tab/dash',
-            title: 'Mobile App',
-            icon: 'app.png'
-        }
-    }
-
-    var cmd = {
-        cmd: 'ionic serve ' + (settings.chromePreview ? opt[settings.selected].cmd_opt : '--nobrowser'),
-        path: getSelectedProjectPath()
-    };
-    
-    studio.sendCommand('MobileAPI.invokeCommand.' + Base64.encode(JSON.stringify(cmd)));
-
-    if(! settings.chromePreview) {
-        studio.extension.registerTabPage('http://127.0.0.1:8100/' + opt[settings.selected].prefix, opt[settings.selected].icon || '', opt[settings.selected].title)
-	    studio.extension.openPageInTab('http://127.0.0.1:8100/' + opt[settings.selected].prefix, opt[settings.selected].title, false);
-    }
-
-	return true;
+    studio.sendCommand('MobileCore.launchTest.' + Base64.encode(JSON.stringify(config)));
 };
 
-function getSelectedProjectPath() {
-    var selectedProject = studio.currentSolution.getProjects()[0];
-    var solutionPath = studio.currentSolution.getSolutionFile().parent.parent.path;
+actions.launchRun = function() {
+	"use strict";
 
-    return solutionPath + (os.isWindows ? '\\' : '/') + selectedProject + '/myApp/';
-}
+    var config = {
+        android: studio.isMenuItemChecked('androidRun'),
+        ios: studio.isMenuItemChecked('iosRun')
+    };
+    studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
+};
+
