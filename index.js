@@ -10,6 +10,11 @@ function enableTools(enable) {
      'launchRun', 'androidRun', 'iosRun'].forEach(function(elm) {
         studio.setActionEnabled(elm, !! enable);
      });
+
+     // disable run iOS for windows
+     if(os.isWindows) {
+        studio.setActionEnabled('iosRun', false);
+     }
 }
 
 
