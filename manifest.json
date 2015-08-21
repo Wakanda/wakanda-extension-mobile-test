@@ -1,7 +1,7 @@
 {
     "extension": 
     {
-        "name": "-",
+        "name": "Test/Run project",
         "version": "1.0.0",
         "description": "tests",
         "icon": "test.png",
@@ -10,6 +10,8 @@
                 "location": "studioToolbar", 
                 "icon": "arrow.png",
                 "tips": "Configure Run",
+                "title": "",
+                "hideMenuButtonArrow": "yes",
                 "menu": [
                     { "actionName": "androidRun" },
                     { "actionName": "iosRun" }
@@ -25,6 +27,8 @@
                 "location": "studioToolbar", 
                 "icon": "arrow.png",
                 "tips": "Configure preview",
+                "title": "",
+                "hideMenuButtonArrow": "yes",
                 "menu": [
                     { "actionName": "chromePreview" },
                     { "actionName": "studioPreview" },
