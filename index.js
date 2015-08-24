@@ -17,6 +17,12 @@ function enableTools(enable) {
      }
 }
 
+function setDefaultConfig() {
+    if(os.isWindows) {
+        studio.checkMenuItem('androidRun', true);
+    }
+}
+
 
 actions.studioPreview = function() {
     "use strict";
@@ -53,7 +59,9 @@ actions.iosTest = function() {
 
 actions.studioStartHandler = function() {
     "use strict";
+    
     enableTools(false);
+    setDefaultConfig();
 };
 
 actions.solutionOpenedHandler = function() {
