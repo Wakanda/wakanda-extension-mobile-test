@@ -28,38 +28,52 @@ function setDefaultConfig() {
 }
 
 
+function loadPreferences() {
+    "use strict";
+
+    ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+     'androidRun', 'iosRun'].forEach(function(elm) {
+        var elmSetting = studio.extension.getSolutionSetting(elm);
+        if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
+            studio.checkMenuItem(elm, elmSetting === 'true');
+        }
+     });
+}
+
+
+function savePreferences() {
+    "use strict";
+
+    ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+     'androidRun', 'iosRun'].forEach(function(elm) {
+        studio.extension.setSolutionSetting(elm, studio.isMenuItemChecked(elm));
+     });
+}
+
 actions.studioPreview = function() {
     "use strict";
+
     var checked = studio.isMenuItemChecked('studioPreview');
     studio.checkMenuItem('studioPreview', ! checked);
-    studio.checkMenuItem('chromePreview', false);
+    studio.checkMenuItem('chromePreview', checked);
+    savePreferences();
 };
 
 actions.chromePreview = function() {
     "use strict";
+
     var checked = studio.isMenuItemChecked('chromePreview');
     studio.checkMenuItem('chromePreview', ! checked);
-    studio.checkMenuItem('studioPreview', false);
+    studio.checkMenuItem('studioPreview', checked);
+    savePreferences();
 };
 
-actions.androidRun = function() {
-    studio.checkMenuItem('androidRun', ! studio.isMenuItemChecked('androidRun'));
-};
-
-actions.iosRun = function() {
-    studio.checkMenuItem('iosRun', ! studio.isMenuItemChecked('iosRun'));
-};
-
-actions.androidTest = function() {
-    "use strict";
-    studio.checkMenuItem('androidTest', ! studio.isMenuItemChecked('androidTest'));
-};
-
-actions.iosTest = function() {
-    "use strict";
-    studio.checkMenuItem('iosTest', ! studio.isMenuItemChecked('iosTest'));
-};
-
+['androidTest', 'iosTest', 'androidRun', 'iosRun'].forEach(function(elm) {
+    actions[elm] = function() {
+        studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
+        savePreferences();
+    };
+});
 
 actions.studioStartHandler = function() {
     "use strict";
@@ -70,11 +84,14 @@ actions.studioStartHandler = function() {
 
 actions.solutionOpenedHandler = function() {
     "use strict";
+
     enableTools(true);
+    loadPreferences();
 };
 
 actions.solutionClosedHandler = function() {
     "use strict";
+
     enableTools(false);
 };
 
@@ -127,4 +144,3 @@ actions.launchRun = function() {
     } 
     studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
-
