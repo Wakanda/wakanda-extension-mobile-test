@@ -21,6 +21,10 @@ function setDefaultConfig() {
     if(os.isWindows) {
         studio.checkMenuItem('androidRun', true);
     }
+
+    studio.checkMenuItem('studioPreview', true);
+    studio.checkMenuItem('androidTest', true);
+    studio.checkMenuItem('iosTest', true);
 }
 
 
@@ -67,8 +71,6 @@ actions.studioStartHandler = function() {
 actions.solutionOpenedHandler = function() {
     "use strict";
     enableTools(true);
-
-    actions.chromePreview();
 };
 
 actions.solutionClosedHandler = function() {
