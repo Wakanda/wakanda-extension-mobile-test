@@ -86,6 +86,8 @@ actions.solutionOpenedHandler = function() {
     "use strict";
 
     enableTools(true);
+
+    setDefaultConfig();
     loadPreferences();
 };
 
@@ -93,6 +95,7 @@ actions.solutionClosedHandler = function() {
     "use strict";
 
     enableTools(false);
+    setDefaultConfig();
 };
 
 
