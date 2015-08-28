@@ -138,9 +138,5 @@ actions.launchRun = function() {
         ios: studio.isMenuItemChecked('iosRun')
     };
 
-    if(! config.android && ! config.ios) {
-        studio.alert('You must select Android or iOs to launch Run emulator.');
-        return;
-    } 
     studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
