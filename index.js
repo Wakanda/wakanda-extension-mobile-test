@@ -143,3 +143,9 @@ actions.launchRun = function() {
 
     studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
+
+actions.solutionBeforeClosingHandler = function() {
+    "use strict";
+
+    studio.sendCommand('MobileCore.stopProjectIonicSerices');
+};
