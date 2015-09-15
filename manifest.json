@@ -9,6 +9,23 @@
             {
                 "location": "studioToolbar", 
                 "icon": "arrow.png",
+                "tips": "Configure Build",
+                "title": "",
+                "hideMenuButtonArrow": "yes",
+                "menu": [
+                    { "actionName": "androidBuild" },
+                    { "actionName": "iosBuild" }
+                ]
+            },
+            {
+                "location": "studioToolbar", 
+		    	"actionName": "launchBuild",
+                "icon": "build.png",
+                "tips": "Build & deploy"
+            },
+            {
+                "location": "studioToolbar", 
+                "icon": "arrow.png",
                 "tips": "Configure Run",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
@@ -103,6 +120,18 @@
             },
             {
                 "name": "iosRun",
+                "title": "iOS"
+            },
+            {
+                "name": "launchBuild",
+                "title": "Build & deploy"
+            },
+            {
+                "name": "androidBuild",
+                "title": "Android"
+            },
+            {
+                "name": "iosBuild",
                 "title": "iOS"
             }
         ],

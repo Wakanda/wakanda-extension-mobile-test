@@ -1,5 +1,4 @@
 var Base64 = require("../lib/base64").Base64;
-var utils = require("../lib/utils");
 
 var actions = {};
 
@@ -7,7 +6,9 @@ function enableTools(enable) {
     "use strict";
 
     ['launchTest', 'chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'launchRun', 'androidRun', 'iosRun'].forEach(function(elm) {
+     'launchRun', 'androidRun', 'iosRun',
+     'launchBuild', 'androidBuild', 'iosBuild'
+    ].forEach(function(elm) {
         studio.setActionEnabled(elm, !! enable);
      });
 
@@ -32,7 +33,9 @@ function loadPreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun'].forEach(function(elm) {
+     'androidRun', 'iosRun',
+     'androidBuild', 'iosBuild'
+    ].forEach(function(elm) {
         var elmSetting = studio.extension.getSolutionSetting(elm);
         if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
             studio.checkMenuItem(elm, elmSetting === 'true');
@@ -45,7 +48,9 @@ function savePreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun'].forEach(function(elm) {
+     'androidRun', 'iosRun',
+     'androidBuild', 'iosBuild'
+    ].forEach(function(elm) {
         studio.extension.setSolutionSetting(elm, studio.isMenuItemChecked(elm));
      });
 }
@@ -68,7 +73,9 @@ actions.chromePreview = function() {
     savePreferences();
 };
 
-['androidTest', 'iosTest', 'androidRun', 'iosRun'].forEach(function(elm) {
+['androidTest', 'iosTest', 
+ 'androidRun', 'iosRun',
+ 'androidBuild', 'iosBuild'].forEach(function(elm) {
     actions[elm] = function() {
         studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
         savePreferences();
@@ -144,8 +151,28 @@ actions.launchRun = function() {
     studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
 
+actions.launchBuild = function() {
+	"use strict";
+
+    var config = {
+        android: studio.isMenuItemChecked('androidBuild'),
+        ios: studio.isMenuItemChecked('iosBuild'),
+        origin: 'MobileTest'
+    };
+
+    studio.sendCommand('MobileCore.launchBuild.' + Base64.encode(JSON.stringify( config )));
+};
+
+
 actions.solutionBeforeClosingHandler = function() {
     "use strict";
 
     studio.sendCommand('MobileCore.stopProjectIonicSerices');
 };
+
+actions.enableAction = function(message) {
+    "use strict";
+
+    studio.setActionEnabled(message.params.action, message.params.enable);
+};
+
