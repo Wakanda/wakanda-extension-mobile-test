@@ -1,4 +1,4 @@
-var Base64 = require("../lib/base64").Base64;
+var Base64 = require("base64").Base64;
 
 var actions = {};
 
