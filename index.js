@@ -15,12 +15,14 @@ function enableTools(enable) {
      // disable run iOS for windows
      if(os.isWindows) {
         studio.setActionEnabled('iosRun', false);
+        studio.setActionEnabled('iosBuild', false);
      }
 }
 
 function setDefaultConfig() {
     if(os.isWindows) {
         studio.checkMenuItem('androidRun', true);
+        studio.checkMenuItem('androidBuild', true);
     }
 
     studio.checkMenuItem('studioPreview', true);
