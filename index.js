@@ -1,4 +1,5 @@
-var Base64 = require("base64").Base64;
+var utils = require("../MobileCore/utils");
+var Base64 = require("base64");
 
 var actions = {};
 
@@ -7,6 +8,7 @@ function enableTools(enable) {
 
     ['launchTest', 'chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'launchRun', 'androidRun', 'iosRun',
+     'androidEmulate', 'iosEmulate',
      'launchBuild', 'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
         studio.setActionEnabled(elm, !! enable);
@@ -20,8 +22,10 @@ function enableTools(enable) {
 }
 
 function setDefaultConfig() {
+    "use strict";
+
     if(os.isWindows) {
-        studio.checkMenuItem('androidRun', true);
+        studio.checkMenuItem('androidEmulate', true);
         studio.checkMenuItem('androidBuild', true);
     }
 
@@ -36,6 +40,7 @@ function loadPreferences() {
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'androidRun', 'iosRun',
+     'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
         var elmSetting = studio.extension.getSolutionSetting(elm);
@@ -51,6 +56,7 @@ function savePreferences() {
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'androidRun', 'iosRun',
+     'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
         studio.extension.setSolutionSetting(elm, studio.isMenuItemChecked(elm));
@@ -77,6 +83,7 @@ actions.chromePreview = function() {
 
 ['androidTest', 'iosTest', 
  'androidRun', 'iosRun',
+ 'androidEmulate', 'iosEmulate',
  'androidBuild', 'iosBuild'].forEach(function(elm) {
     actions[elm] = function() {
         studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
@@ -138,7 +145,6 @@ actions.launchTest = function() {
     }
     
     config.chromePreview = studio.isMenuItemChecked('chromePreview');
-
     studio.sendCommand('MobileCore.launchTest.' + Base64.encode(JSON.stringify(config)));
 };
 
@@ -146,8 +152,14 @@ actions.launchRun = function() {
 	"use strict";
 
     var config = {
-        android: studio.isMenuItemChecked('androidRun'),
-        ios: studio.isMenuItemChecked('iosRun')
+        emulator: {
+            android: studio.isMenuItemChecked('androidEmulate'),
+            ios: studio.isMenuItemChecked('iosEmulate')
+        },
+        device: {
+            android: studio.isMenuItemChecked('androidRun'),
+            ios: studio.isMenuItemChecked('iosRun')
+        }
     };
 
     studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
@@ -178,3 +190,14 @@ actions.enableAction = function(message) {
     studio.setActionEnabled(message.params.action, message.params.enable);
 };
 
+actions.menuRunOpened = function() {
+    var devices = utils.getConnectedDevices();
+
+    ['android', 'ios'].forEach(function(platform) {
+        studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
+        studio.checkMenuItem(platform + 'Run', !! devices[platform].connected);
+
+
+        studio.checkMenuItem(platform + 'Emulate', ! devices[platform].connected);
+    });
+};

@@ -30,8 +30,12 @@
                 "title": "",
                 "hideMenuButtonArrow": "yes",
                 "menu": [
+                    { "actionName": "androidEmulate" },
+                    { "actionName": "iosEmulate" },
+                    { "separator": {} },
                     { "actionName": "androidRun" },
                     { "actionName": "iosRun" }
+
                 ]
             },
             {
@@ -116,11 +120,19 @@
             },
             {
                 "name": "androidRun",
-                "title": "Android"
+                "title": "Android device"
             },
             {
                 "name": "iosRun",
-                "title": "iOS"
+                "title": "iPhone"
+            },
+            {
+                "name": "androidEmulate",
+                "title": "Android emulator"
+            },
+            {
+                "name": "iosEmulate",
+                "title": "iOS emulator"
             },
             {
                 "name": "launchBuild",
