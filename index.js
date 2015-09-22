@@ -151,15 +151,20 @@ actions.launchTest = function() {
 actions.launchRun = function() {
 	"use strict";
 
+    //var config = {
+    //    emulator: {
+    //        android: studio.isMenuItemChecked('androidEmulate'),
+    //        ios: studio.isMenuItemChecked('iosEmulate')
+    //    },
+    //    device: {
+    //        android: studio.isMenuItemChecked('androidRun'),
+    //        ios: studio.isMenuItemChecked('iosRun')
+    //    }
+    //};
+    //
     var config = {
-        emulator: {
-            android: studio.isMenuItemChecked('androidEmulate'),
-            ios: studio.isMenuItemChecked('iosEmulate')
-        },
-        device: {
-            android: studio.isMenuItemChecked('androidRun'),
-            ios: studio.isMenuItemChecked('iosRun')
-        }
+        android: studio.isMenuItemChecked('androidEmulate'),
+        ios: studio.isMenuItemChecked('iosEmulate')
     };
 
     studio.sendCommand('wakanda-extension-mobile-core.launchRun.' + Base64.encode(JSON.stringify( config )));
