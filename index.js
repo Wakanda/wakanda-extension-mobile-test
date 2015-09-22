@@ -1,4 +1,4 @@
-var utils = require("../MobileCore/utils");
+var utils = require("../wakanda-extension-mobile-core/utils");
 var Base64 = require("base64");
 
 var actions = {};
@@ -145,7 +145,7 @@ actions.launchTest = function() {
     }
     
     config.chromePreview = studio.isMenuItemChecked('chromePreview');
-    studio.sendCommand('MobileCore.launchTest.' + Base64.encode(JSON.stringify(config)));
+    studio.sendCommand('wakanda-extension-mobile-core.launchTest.' + Base64.encode(JSON.stringify(config)));
 };
 
 actions.launchRun = function() {
@@ -162,7 +162,7 @@ actions.launchRun = function() {
         }
     };
 
-    studio.sendCommand('MobileCore.launchRun.' + Base64.encode(JSON.stringify( config )));
+    studio.sendCommand('wakanda-extension-mobile-core.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
 
 actions.launchBuild = function() {
@@ -171,17 +171,17 @@ actions.launchBuild = function() {
     var config = {
         android: studio.isMenuItemChecked('androidBuild'),
         ios: studio.isMenuItemChecked('iosBuild'),
-        origin: 'MobileTest'
+        origin: 'wakanda-extension-mobile-test'
     };
 
-    studio.sendCommand('MobileCore.launchBuild.' + Base64.encode(JSON.stringify( config )));
+    studio.sendCommand('wakanda-extension-mobile-core.launchBuild.' + Base64.encode(JSON.stringify( config )));
 };
 
 
 actions.solutionBeforeClosingHandler = function() {
     "use strict";
 
-    studio.sendCommand('MobileCore.stopProjectIonicSerices');
+    studio.sendCommand('wakanda-extension-mobile-core.stopProjectIonicSerices');
 };
 
 actions.enableAction = function(message) {
