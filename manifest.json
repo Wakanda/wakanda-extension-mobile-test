@@ -120,11 +120,11 @@
             },
             {
                 "name": "androidRun",
-                "title": "Android device"
+                "title": "Android devices"
             },
             {
                 "name": "iosRun",
-                "title": "iPhone"
+                "title": "iOS devices"
             },
             {
                 "name": "androidEmulate",
