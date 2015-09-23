@@ -30,6 +30,7 @@ function setDefaultConfig() {
     }
 
     studio.checkMenuItem('studioPreview', true);
+    studio.checkMenuItem('chromePreview', false);
     studio.checkMenuItem('androidTest', true);
     studio.checkMenuItem('iosTest', true);
 }
