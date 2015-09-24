@@ -152,22 +152,17 @@ actions.launchTest = function() {
 actions.launchRun = function() {
 	"use strict";
 
-    //var config = {
-    //    emulator: {
-    //        android: studio.isMenuItemChecked('androidEmulate'),
-    //        ios: studio.isMenuItemChecked('iosEmulate')
-    //    },
-    //    device: {
-    //        android: studio.isMenuItemChecked('androidRun'),
-    //        ios: studio.isMenuItemChecked('iosRun')
-    //    }
-    //};
-    //
     var config = {
-        android: studio.isMenuItemChecked('androidEmulate'),
-        ios: studio.isMenuItemChecked('iosEmulate')
+        emulator: {
+            android: studio.isMenuItemChecked('androidEmulate'),
+            ios: studio.isMenuItemChecked('iosEmulate')
+        },
+        device: {
+            android: studio.isMenuItemChecked('androidRun'),
+            ios: studio.isMenuItemChecked('iosRun')
+        }
     };
-
+    
     studio.sendCommand('wakanda-extension-mobile-core.launchRun.' + Base64.encode(JSON.stringify( config )));
 };
 
@@ -206,4 +201,22 @@ actions.menuRunOpened = function() {
 
         studio.checkMenuItem(platform + 'Emulate', ! devices[platform].connected);
     });
+};
+
+actions.listenEvent = function(message) {
+
+    switch(message.params.eventName) {
+        case 'run':
+            studio.setActionEnabled('launchRun', false);
+            break;
+        case 'runFinished':
+            studio.setActionEnabled('launchRun', true);
+            break;
+        case 'build': 
+            studio.setActionEnabled('launchBuild', false);
+            break;
+        case 'buildFinished':
+            studio.setActionEnabled('launchBuild', true);
+            break;
+    }
 };
