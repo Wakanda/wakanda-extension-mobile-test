@@ -8,7 +8,7 @@
         "senders": [
             {
                 "location": "studioToolbar", 
-                "icon": "arrow.png",
+                "icon": "arrow-left.png",
                 "tips": "Configure Build",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
