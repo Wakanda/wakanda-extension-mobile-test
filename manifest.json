@@ -29,6 +29,7 @@
                 "tips": "Configure Run",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
+                "id": "configRun",
                 "menu": [
                     { "actionName": "androidEmulate" },
                     { "actionName": "iosEmulate" },
@@ -145,6 +146,13 @@
             {
                 "name": "iosBuild",
                 "title": "iOS"
+            },
+            {
+                "name": "menuOpened",
+                "title": "Test Menu Opening",
+                "trigger": [
+                    { "event": "onToolbarButtonMenuOpen" }
+                ]
             }
         ],
         "lifetime": "action_lifetime"

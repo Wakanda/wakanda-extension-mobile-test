@@ -40,7 +40,6 @@ function loadPreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
@@ -56,7 +55,6 @@ function savePreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
@@ -83,12 +81,17 @@ actions.chromePreview = function() {
 };
 
 ['androidTest', 'iosTest', 
- 'androidRun', 'iosRun',
  'androidEmulate', 'iosEmulate',
  'androidBuild', 'iosBuild'].forEach(function(elm) {
     actions[elm] = function() {
         studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
         savePreferences();
+    };
+});
+
+['androidRun', 'iosRun'].forEach(function(elm) {
+    actions[elm] = function() {
+        studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
     };
 });
 
@@ -191,16 +194,18 @@ actions.enableAction = function(message) {
     studio.setActionEnabled(message.params.action, message.params.enable);
 };
 
-actions.menuRunOpened = function() {
-    var devices = utils.getConnectedDevices();
+actions.menuOpened = function(message) {
+    var menuId = message.source.data.length && message.source.data[0];
 
-    ['android', 'ios'].forEach(function(platform) {
-        studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
-        studio.checkMenuItem(platform + 'Run', !! devices[platform].connected);
-
-
-        studio.checkMenuItem(platform + 'Emulate', ! devices[platform].connected);
-    });
+    if(menuId === 'wakanda-extension-mobile-test.configRun') {
+        var devices = utils.getConnectedDevices();
+        ['android', 'ios'].forEach(function(platform) {
+            studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
+            if(! devices[platform].connected) {
+                studio.checkMenuItem(platform + 'Run', false);
+            }
+        });
+    } 
 };
 
 actions.listenEvent = function(message) {
