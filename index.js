@@ -14,8 +14,9 @@ function enableTools(enable) {
         studio.setActionEnabled(elm, !! enable);
      });
 
-     // disable run iOS for windows
+     // disable iOS for windows
      if(os.isWindows) {
+        studio.setActionEnabled('iosEmulate', false);
         studio.setActionEnabled('iosRun', false);
         studio.setActionEnabled('iosBuild', false);
      }
@@ -43,10 +44,16 @@ function loadPreferences() {
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
+        if(os.isWindows && (elm === 'iosEmulate' || elm === 'iosBuild')) {
+            studio.checkMenuItem(elm, false);
+            return;
+        }
+
         var elmSetting = studio.extension.getSolutionSetting(elm);
         if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
             studio.checkMenuItem(elm, elmSetting === 'true');
         }
+
      });
 }
 
