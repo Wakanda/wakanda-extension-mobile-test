@@ -36,6 +36,16 @@ function setDefaultConfig() {
     studio.checkMenuItem('iosTest', true);
 }
 
+function initEnvironnement() {
+
+    // start adb service for mobile project
+    var file = File( utils.getSelectedProjectPath() + '/ionic.project' );
+    if(file.exists) {
+        // executeAsyncCmd crash the studio !!!
+        //utils.executeAsyncCmd({ cmd: 'adb start-server' });
+        utils.executeSyncCmd({ cmd: 'adb start-server' });
+    }   
+}
 
 function loadPreferences() {
     "use strict";
@@ -116,6 +126,8 @@ actions.solutionOpenedHandler = function() {
 
     setDefaultConfig();
     loadPreferences();
+
+    initEnvironnement();
 };
 
 actions.solutionClosedHandler = function() {
