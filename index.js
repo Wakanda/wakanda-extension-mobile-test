@@ -263,6 +263,10 @@ actions.listenEvent = function(message) {
             studio.setActionEnabled('launchBuild', false);
             break;
         case 'buildFinished':
+            // open build console tab
+            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);
+
+            // enable build button
             studio.setActionEnabled('launchBuild', true);
             break;
     }
