@@ -3,6 +3,26 @@ var Base64 = require("base64");
 
 var actions = {};
 
+// global variables
+var ADB_INSTALLED = false;
+
+
+function initGlobalVariables() {
+    // set isAndroidInstalled variable
+    utils.executeAsyncCmd({
+        cmd: 'adb version',
+        options: {
+            consoleSilentMode: true
+        },
+        onmessage: function(msg) {
+            ADB_INSTALLED = true;
+        },
+        onerror: function(msg) {
+            ADB_INSTALLED = false;
+        }
+    });
+}
+
 function enableTools(enable) {
     "use strict";
 
@@ -37,14 +57,15 @@ function setDefaultConfig() {
 }
 
 function initEnvironnement() {
+    // start adb service for mobile project if adb installed and, if a project is a ionic project
+    if(! ADB_INSTALLED) {
+        return;
+    }
 
-    // start adb service for mobile project
     var file = File( utils.getSelectedProjectPath() + '/ionic.project' );
     if(file.exists) {
-        // executeAsyncCmd crash the studio !!!
-        //utils.executeAsyncCmd({ cmd: 'adb start-server' });
-        utils.executeSyncCmd({ cmd: 'adb start-server' });
-    }   
+        utils.executeAsyncCmd({ cmd: 'adb start-server' });
+    }
 }
 
 function loadPreferences() {
@@ -63,7 +84,6 @@ function loadPreferences() {
         if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
             studio.checkMenuItem(elm, elmSetting === 'true');
         }
-
      });
 }
 
@@ -117,6 +137,8 @@ actions.studioStartHandler = function() {
     
     enableTools(false);
     setDefaultConfig();
+
+    initGlobalVariables();
 };
 
 actions.solutionOpenedHandler = function() {
@@ -218,6 +240,7 @@ actions.menuOpened = function(message) {
 
     if(menuId === 'wakanda-extension-mobile-test.configRun') {
         var devices = utils.getConnectedDevices();
+        
         ['android', 'ios'].forEach(function(platform) {
             studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
             if(! devices[platform].connected) {
