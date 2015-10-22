@@ -47,7 +47,12 @@ function setDefaultConfig() {
 
     if(os.isWindows) {
         studio.checkMenuItem('androidEmulate', true);
-        studio.checkMenuItem('androidBuild', true);
+    }
+
+    // defualt setting for build
+    studio.checkMenuItem('androidBuild', true);
+    if(! os.isWindows) {
+        studio.checkMenuItem('iosBuild', true);
     }
 
     studio.checkMenuItem('studioPreview', true);
