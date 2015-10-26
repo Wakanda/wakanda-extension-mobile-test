@@ -67,7 +67,7 @@ function initEnvironnement() {
         return;
     }
 
-    var file = File( utils.getSelectedProjectPath() + '/ionic.project' );
+    var file = File( utils.getMobileProjectPath() + '/ionic.project' );
     if(file.exists) {
         utils.executeAsyncCmd({ cmd: 'adb start-server' });
     }
