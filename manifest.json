@@ -8,6 +8,23 @@
         "senders": [
             {
                 "location": "studioToolbar", 
+                "icon": "arrow.png",
+                "tips": "Configure run web app",
+                "title": "",
+                "hideMenuButtonArrow": "yes",
+                "menu": [
+                    { "actionName": "webChromePreview" },
+                    { "actionName": "webStudioPreview" }
+                ]
+            },
+            {
+                "location": "studioToolbar", 
+                "actionName": "launchWebPreview",
+                "icon": "angularjs_logo.png",
+                "tips": "Web"
+            },
+            {
+                "location": "studioToolbar", 
                 "icon": "arrow-left.png",
                 "tips": "Configure Build",
                 "title": "",
@@ -38,7 +55,6 @@
                     { "separator": {} },
                     { "actionName": "androidRun" },
                     { "actionName": "iosRun" }
-
                 ]
             },
             {
@@ -159,6 +175,18 @@
                 "trigger": [
                     { "event": "onToolbarButtonMenuOpen" }
                 ]
+            },
+            {
+                "name": "launchWebPreview",
+                "title": "web preview"
+            },
+            {
+                "name": "webStudioPreview",
+                "title": "Preview in Studio"
+            },
+            {
+                "name": "webChromePreview",
+                "title": "Preview in Chrome"
             }
         ],
         "lifetime": "application_lifetime"
