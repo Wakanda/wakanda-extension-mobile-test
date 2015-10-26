@@ -269,9 +269,9 @@ actions.listenEvent = function(message) {
             break;
         case 'buildFinished':
             // open build console tab if build ended without error
-            if(! (message.params.data && message.params.data.buildingError)) {
-                studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);    
-            }
+            //if(! (message.params.data && message.params.data.buildingError)) {
+            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);    
+            //}
             
             // enable build button
             studio.setActionEnabled('launchBuild', true);
