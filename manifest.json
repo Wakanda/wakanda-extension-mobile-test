@@ -20,12 +20,14 @@
             {
                 "location": "studioToolbar", 
 		    	"actionName": "launchBuild",
-                "icon": "build.png",
+                "icon": "mobileBuild.png",
+                "alternateIcon": "mobileBuild_alt.png",
+                "title": "Mobile build",
                 "tips": "Build & deploy"
             },
             {
                 "location": "studioToolbar", 
-                "icon": "arrow.png",
+                "icon": "arrow-left.png",
                 "tips": "Configure Run",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
@@ -42,12 +44,14 @@
             {
                 "location": "studioToolbar", 
 		    	"actionName": "launchRun",
-                "icon": "run.png",
+                "icon": "mobileRun.png",
+                "alternateIcon": "mobileRun_alt.png",
+                "title": "Mobile run",
                 "tips": "Run"
             },
             {
                 "location": "studioToolbar", 
-                "icon": "arrow.png",
+                "icon": "arrow-left.png",
                 "tips": "Configure preview",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
@@ -62,7 +66,9 @@
             {
                 "location": "studioToolbar", 
 		    	"actionName": "launchTest",
-                "icon": "test.png",
+                "icon": "mobilePreview.png",
+                "alternateIcon": "mobilePreview.png",
+                "title": "Mobile test",
                 "tips": "Test"
             }
         ],
