@@ -3,6 +3,26 @@ var Base64 = require("base64");
 
 var actions = {};
 
+// global variables
+var ADB_INSTALLED = false;
+
+
+function initGlobalVariables() {
+    // set isAndroidInstalled variable
+    utils.executeAsyncCmd({
+        cmd: 'adb version',
+        options: {
+            consoleSilentMode: true
+        },
+        onmessage: function(msg) {
+            ADB_INSTALLED = true;
+        },
+        onerror: function(msg) {
+            ADB_INSTALLED = false;
+        }
+    });
+}
+
 function enableTools(enable) {
     "use strict";
 
@@ -14,8 +34,9 @@ function enableTools(enable) {
         studio.setActionEnabled(elm, !! enable);
      });
 
-     // disable run iOS for windows
+     // disable iOS for windows
      if(os.isWindows) {
+        studio.setActionEnabled('iosEmulate', false);
         studio.setActionEnabled('iosRun', false);
         studio.setActionEnabled('iosBuild', false);
      }
@@ -26,7 +47,12 @@ function setDefaultConfig() {
 
     if(os.isWindows) {
         studio.checkMenuItem('androidEmulate', true);
-        studio.checkMenuItem('androidBuild', true);
+    }
+
+    // defualt setting for build
+    studio.checkMenuItem('androidBuild', true);
+    if(! os.isWindows) {
+        studio.checkMenuItem('iosBuild', true);
     }
 
     studio.checkMenuItem('studioPreview', true);
@@ -35,15 +61,30 @@ function setDefaultConfig() {
     studio.checkMenuItem('iosTest', true);
 }
 
+function initEnvironnement() {
+    // start adb service for mobile project if adb installed and, if a project is a ionic project
+    if(! ADB_INSTALLED) {
+        return;
+    }
+
+    var file = File( utils.getSelectedProjectPath() + '/ionic.project' );
+    if(file.exists) {
+        utils.executeAsyncCmd({ cmd: 'adb start-server' });
+    }
+}
 
 function loadPreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
+        if(os.isWindows && (elm === 'iosEmulate' || elm === 'iosBuild')) {
+            studio.checkMenuItem(elm, false);
+            return;
+        }
+
         var elmSetting = studio.extension.getSolutionSetting(elm);
         if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
             studio.checkMenuItem(elm, elmSetting === 'true');
@@ -56,7 +97,6 @@ function savePreferences() {
     "use strict";
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
-     'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild'
     ].forEach(function(elm) {
@@ -83,7 +123,6 @@ actions.chromePreview = function() {
 };
 
 ['androidTest', 'iosTest', 
- 'androidRun', 'iosRun',
  'androidEmulate', 'iosEmulate',
  'androidBuild', 'iosBuild'].forEach(function(elm) {
     actions[elm] = function() {
@@ -92,11 +131,19 @@ actions.chromePreview = function() {
     };
 });
 
+['androidRun', 'iosRun'].forEach(function(elm) {
+    actions[elm] = function() {
+        studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
+    };
+});
+
 actions.studioStartHandler = function() {
     "use strict";
     
     enableTools(false);
     setDefaultConfig();
+
+    initGlobalVariables();
 };
 
 actions.solutionOpenedHandler = function() {
@@ -106,6 +153,8 @@ actions.solutionOpenedHandler = function() {
 
     setDefaultConfig();
     loadPreferences();
+
+    initEnvironnement();
 };
 
 actions.solutionClosedHandler = function() {
@@ -191,16 +240,19 @@ actions.enableAction = function(message) {
     studio.setActionEnabled(message.params.action, message.params.enable);
 };
 
-actions.menuRunOpened = function() {
-    var devices = utils.getConnectedDevices();
+actions.menuOpened = function(message) {
+    var menuId = message.source.data.length && message.source.data[0];
 
-    ['android', 'ios'].forEach(function(platform) {
-        studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
-        studio.checkMenuItem(platform + 'Run', !! devices[platform].connected);
-
-
-        studio.checkMenuItem(platform + 'Emulate', ! devices[platform].connected);
-    });
+    if(menuId === 'wakanda-extension-mobile-test.configRun') {
+        var devices = utils.getConnectedDevices();
+        
+        ['android', 'ios'].forEach(function(platform) {
+            studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
+            if(! devices[platform].connected) {
+                studio.checkMenuItem(platform + 'Run', false);
+            }
+        });
+    } 
 };
 
 actions.listenEvent = function(message) {
@@ -216,6 +268,12 @@ actions.listenEvent = function(message) {
             studio.setActionEnabled('launchBuild', false);
             break;
         case 'buildFinished':
+            // open build console tab if build ended without error
+            //if(! (message.params.data && message.params.data.buildingError)) {
+            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);    
+            //}
+            
+            // enable build button
             studio.setActionEnabled('launchBuild', true);
             break;
     }
