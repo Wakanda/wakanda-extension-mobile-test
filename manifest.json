@@ -27,7 +27,7 @@
             },
             {
                 "location": "studioToolbar", 
-                "icon": "arrow.png",
+                "icon": "arrow-left.png",
                 "tips": "Configure Run",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
@@ -51,7 +51,7 @@
             },
             {
                 "location": "studioToolbar", 
-                "icon": "arrow.png",
+                "icon": "arrow-left.png",
                 "tips": "Configure preview",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
