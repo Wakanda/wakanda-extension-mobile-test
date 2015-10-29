@@ -4,7 +4,7 @@
         "name": "wakanda-extension-mobile-test",
         "version": "1.0.0",
         "description": "tests",
-        "icon": "test.png",
+        "icon": "mobilePreview.png",
         "senders": [
             {
                 "location": "studioToolbar", 
@@ -68,8 +68,8 @@
 		    	"actionName": "launchTest",
                 "icon": "mobilePreview.png",
                 "alternateIcon": "mobilePreview.png",
-                "title": "Mobile test",
-                "tips": "Test"
+                "title": "Mobile preview",
+                "tips": "Preview"
             }
         ],
         "actions": [
