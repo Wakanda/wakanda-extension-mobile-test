@@ -20,7 +20,7 @@
             {
                 "location": "studioToolbar", 
                 "actionName": "launchWebPreview",
-                "icon": "angularjs_logo.png",
+                "icon": "webRun.png",
                 "tips": "Web"
             },
             {
@@ -178,15 +178,15 @@
             },
             {
                 "name": "launchWebPreview",
-                "title": "web preview"
+                "title": "Web Run"
             },
             {
                 "name": "webStudioPreview",
-                "title": "Preview in Studio"
+                "title": "Run in Studio"
             },
             {
                 "name": "webChromePreview",
-                "title": "Preview in Chrome"
+                "title": "Run in Chrome"
             }
         ],
         "lifetime": "application_lifetime"

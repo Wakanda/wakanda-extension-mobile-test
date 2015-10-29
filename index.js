@@ -30,7 +30,7 @@ function enableTools(enable) {
      'launchRun', 'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'launchBuild', 'androidBuild', 'iosBuild',
-     'webStudioPreview', 'webChromePreview'
+     'launchWebPreview', 'webStudioPreview', 'webChromePreview'
     ].forEach(function(elm) {
         studio.setActionEnabled(elm, !! enable);
      });
@@ -147,8 +147,7 @@ actions.webChromePreview = function() {
 
 ['androidTest', 'iosTest', 
  'androidEmulate', 'iosEmulate',
- 'androidBuild', 'iosBuild',
- 'webStudioPreview', 'webChromePreview'
+ 'androidBuild', 'iosBuild'
 ].forEach(function(elm) {
     actions[elm] = function() {
         studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
@@ -293,13 +292,15 @@ actions.listenEvent = function(message) {
             studio.setActionEnabled('launchBuild', false);
             break;
         case 'buildFinished':
-            // open build console tab if build ended without error
-            //if(! (message.params.data && message.params.data.buildingError)) {
-            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);    
-            //}
-            
+            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);            
             // enable build button
             studio.setActionEnabled('launchBuild', true);
+            break;
+        case 'webRunWaitConnectToServer':
+            studio.setActionEnabled('launchWebPreview', false);
+            break;
+        case 'webRunConnectedToServer':
+            studio.setActionEnabled('launchWebPreview', true);
             break;
     }
 };
@@ -311,5 +312,5 @@ actions.launchWebPreview = function(message) {
         webStudioPreview: studio.isMenuItemChecked('webStudioPreview')
     };
 
-    //studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify( config )));
+    studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify( config )));
 };
