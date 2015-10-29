@@ -21,6 +21,7 @@
                 "location": "studioToolbar", 
                 "actionName": "launchWebPreview",
                 "icon": "webRun.png",
+                "alternateIcon": "webRun_alt.png",
                 "tips": "Web"
             },
             {
