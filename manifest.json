@@ -23,7 +23,7 @@
                 "icon": "mobileBuild.png",
                 "alternateIcon": "mobileBuild_alt.png",
                 "title": "Mobile build",
-                "tips": "Build & deploy"
+                "tips": "Mobile build"
             },
             {
                 "location": "studioToolbar", 
@@ -47,7 +47,7 @@
                 "icon": "mobileRun.png",
                 "alternateIcon": "mobileRun_alt.png",
                 "title": "Mobile run",
-                "tips": "Run"
+                "tips": "Mobile run"
             },
             {
                 "location": "studioToolbar", 
@@ -69,7 +69,7 @@
                 "icon": "mobilePreview.png",
                 "alternateIcon": "mobilePreview.png",
                 "title": "Mobile preview",
-                "tips": "Preview"
+                "tips": "Mobile preview"
             }
         ],
         "actions": [
