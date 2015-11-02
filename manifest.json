@@ -9,24 +9,6 @@
             {
                 "location": "studioToolbar", 
                 "icon": "arrow-left.png",
-                "tips": "Configure run web app",
-                "title": "",
-                "hideMenuButtonArrow": "yes",
-                "menu": [
-                    { "actionName": "webChromePreview" },
-                    { "actionName": "webStudioPreview" }
-                ]
-            },
-            {
-                "location": "studioToolbar", 
-                "actionName": "launchWebPreview",
-                "icon": "webRun.png",
-                "alternateIcon": "webRun_alt.png",
-                "tips": "Web"
-            },
-            {
-                "location": "studioToolbar", 
-                "icon": "arrow-left.png",
                 "tips": "Configure Build",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
