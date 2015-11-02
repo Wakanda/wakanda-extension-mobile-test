@@ -38,7 +38,6 @@
                     { "separator": {} },
                     { "actionName": "androidRun" },
                     { "actionName": "iosRun" }
-
                 ]
             },
             {
@@ -159,6 +158,18 @@
                 "trigger": [
                     { "event": "onToolbarButtonMenuOpen" }
                 ]
+            },
+            {
+                "name": "launchWebPreview",
+                "title": "Web Run"
+            },
+            {
+                "name": "webStudioPreview",
+                "title": "Run in Studio"
+            },
+            {
+                "name": "webChromePreview",
+                "title": "Run in Chrome"
             }
         ],
         "lifetime": "application_lifetime"

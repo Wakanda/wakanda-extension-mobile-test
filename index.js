@@ -29,7 +29,8 @@ function enableTools(enable) {
     ['launchTest', 'chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'launchRun', 'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
-     'launchBuild', 'androidBuild', 'iosBuild'
+     'launchBuild', 'androidBuild', 'iosBuild',
+     'launchWebPreview', 'webStudioPreview', 'webChromePreview'
     ].forEach(function(elm) {
         studio.setActionEnabled(elm, !! enable);
      });
@@ -59,6 +60,8 @@ function setDefaultConfig() {
     studio.checkMenuItem('chromePreview', false);
     studio.checkMenuItem('androidTest', true);
     studio.checkMenuItem('iosTest', true);
+
+    studio.checkMenuItem('webStudioPreview', true);
 }
 
 function initEnvironnement() {
@@ -67,7 +70,7 @@ function initEnvironnement() {
         return;
     }
 
-    var file = File( utils.getSelectedProjectPath() + '/ionic.project' );
+    var file = File( utils.getMobileProjectPath() + '/ionic.project' );
     if(file.exists) {
         utils.executeAsyncCmd({ cmd: 'adb start-server' });
     }
@@ -78,7 +81,8 @@ function loadPreferences() {
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'androidEmulate', 'iosEmulate',
-     'androidBuild', 'iosBuild'
+     'androidBuild', 'iosBuild',
+     'webStudioPreview', 'webChromePreview'
     ].forEach(function(elm) {
         if(os.isWindows && (elm === 'iosEmulate' || elm === 'iosBuild')) {
             studio.checkMenuItem(elm, false);
@@ -98,7 +102,8 @@ function savePreferences() {
 
     ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
      'androidEmulate', 'iosEmulate',
-     'androidBuild', 'iosBuild'
+     'androidBuild', 'iosBuild',
+     'webStudioPreview', 'webChromePreview'
     ].forEach(function(elm) {
         studio.extension.setSolutionSetting(elm, studio.isMenuItemChecked(elm));
      });
@@ -122,9 +127,28 @@ actions.chromePreview = function() {
     savePreferences();
 };
 
+actions.webStudioPreview = function() {
+    "use strict";
+
+    var checked = studio.isMenuItemChecked('webStudioPreview');
+    studio.checkMenuItem('webStudioPreview', ! checked);
+    studio.checkMenuItem('webChromePreview', checked);
+    savePreferences();
+};
+
+actions.webChromePreview = function() {
+    "use strict";
+
+    var checked = studio.isMenuItemChecked('webChromePreview');
+    studio.checkMenuItem('webChromePreview', ! checked);
+    studio.checkMenuItem('webStudioPreview', checked);
+    savePreferences();
+};
+
 ['androidTest', 'iosTest', 
  'androidEmulate', 'iosEmulate',
- 'androidBuild', 'iosBuild'].forEach(function(elm) {
+ 'androidBuild', 'iosBuild'
+].forEach(function(elm) {
     actions[elm] = function() {
         studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
         savePreferences();
@@ -268,13 +292,25 @@ actions.listenEvent = function(message) {
             studio.setActionEnabled('launchBuild', false);
             break;
         case 'buildFinished':
-            // open build console tab if build ended without error
-            //if(! (message.params.data && message.params.data.buildingError)) {
-            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);    
-            //}
-            
+            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);            
             // enable build button
             studio.setActionEnabled('launchBuild', true);
             break;
+        case 'webRunWaitConnectToServer':
+            studio.setActionEnabled('launchWebPreview', false);
+            break;
+        case 'webRunConnectedToServer':
+            studio.setActionEnabled('launchWebPreview', true);
+            break;
     }
+};
+
+actions.launchWebPreview = function(message) {
+
+    var config = {
+        webChromePreview: studio.isMenuItemChecked('webChromePreview'),
+        webStudioPreview: studio.isMenuItemChecked('webStudioPreview')
+    };
+
+    studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify( config )));
 };
