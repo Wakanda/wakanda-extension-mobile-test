@@ -256,6 +256,8 @@ actions.solutionBeforeClosingHandler = function() {
     "use strict";
 
     studio.sendCommand('wakanda-extension-mobile-core.stopProjectIonicSerices');
+
+    studio.sendCommand('wakanda-extension-mobile-core.stopProjectGulpServices');
 };
 
 actions.enableAction = function(message) {
@@ -297,11 +299,14 @@ actions.listenEvent = function(message) {
             studio.setActionEnabled('launchBuild', true);
             break;
         case 'webRunWaitConnectToServer':
+        case 'webInstallingNpmModules':
             studio.setActionEnabled('launchWebPreview', false);
             break;
+        case 'webInstallingNpmModulesFinished':            
         case 'webRunConnectedToServer':
             studio.setActionEnabled('launchWebPreview', true);
             break;
+
     }
 };
 
