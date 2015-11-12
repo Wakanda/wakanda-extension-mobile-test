@@ -8,7 +8,7 @@
         "senders": [
             {
                 "location": "studioToolbar", 
-		    	"actionName": "launchBuild",
+                "actionName": "launchBuild",
                 "icon": "mobileBuild.png",
                 "alternateIcon": "mobileBuild_alt.png",
                 "title": "Build",
@@ -20,7 +20,7 @@
             },
             {
                 "location": "studioToolbar", 
-		    	"actionName": "launchRun",
+                "actionName": "launchRun",
                 "icon": "mobileRun.png",
                 "alternateIcon": "mobileRun_alt.png",
                 "title": "Run",
@@ -36,7 +36,7 @@
             },
             {
                 "location": "studioToolbar", 
-		    	"actionName": "launchTest",
+                "actionName": "launchTest",
                 "icon": "mobilePreview.png",
                 "alternateIcon": "mobilePreview.png",
                 "title": "Preview",
