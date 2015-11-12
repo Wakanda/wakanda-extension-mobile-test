@@ -1,70 +1,93 @@
 {
-    "extension": 
-    {
+    "extension": {
         "name": "wakanda-extension-mobile-test",
         "version": "1.0.0",
         "description": "tests",
         "icon": "mobilePreview.png",
         "senders": [
             {
-                "location": "studioToolbar", 
+                "location": "studioToolbar",
                 "icon": "arrow-left.png",
                 "tips": "Configure Build",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
                 "menu": [
-                    { "actionName": "androidBuild" },
-                    { "actionName": "iosBuild" }
+                    {
+                        "actionName": "androidBuild"
+                    },
+                    {
+                        "actionName": "iosBuild"
+                    }
                 ]
             },
             {
-                "location": "studioToolbar", 
-		    	"actionName": "launchBuild",
+                "location": "studioToolbar",
+                "actionName": "launchBuild",
                 "icon": "mobileBuild.png",
                 "alternateIcon": "mobileBuild_alt.png",
                 "title": "Mobile build",
                 "tips": "Mobile build"
             },
             {
-                "location": "studioToolbar", 
+                "location": "studioToolbar",
                 "icon": "arrow-left.png",
                 "tips": "Configure Run",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
                 "id": "configRun",
                 "menu": [
-                    { "actionName": "androidEmulate" },
-                    { "actionName": "iosEmulate" },
-                    { "separator": {} },
-                    { "actionName": "androidRun" },
-                    { "actionName": "iosRun" }
+                    {
+                        "actionName": "androidEmulate"
+                    },
+                    {
+                        "actionName": "iosEmulate"
+                    },
+                    {
+                        "separator": {}
+                    },
+                    {
+                        "actionName": "androidRun"
+                    },
+                    {
+                        "actionName": "iosRun"
+                    }
                 ]
             },
             {
-                "location": "studioToolbar", 
-		    	"actionName": "launchRun",
+                "location": "studioToolbar",
+                "actionName": "launchRun",
                 "icon": "mobileRun.png",
                 "alternateIcon": "mobileRun_alt.png",
                 "title": "Mobile run",
                 "tips": "Mobile run"
             },
             {
-                "location": "studioToolbar", 
+                "location": "studioToolbar",
                 "icon": "arrow-left.png",
                 "tips": "Configure preview",
                 "title": "",
                 "hideMenuButtonArrow": "yes",
                 "menu": [
-                    { "actionName": "chromePreview" },
-                    { "actionName": "studioPreview" },
-                    { "separator": {} },
-                    { "actionName": "androidTest" },
-                    { "actionName": "iosTest" }
+                    {
+                        "actionName": "browserPreview"
+                    },
+                    {
+                        "actionName": "studioPreview"
+                    },
+                    {
+                        "separator": {}
+                    },
+                    {
+                        "actionName": "androidTest"
+                    },
+                    {
+                        "actionName": "iosTest"
+                    }
                 ]
             },
             {
-                "location": "studioToolbar", 
-		    	"actionName": "launchTest",
+                "location": "studioToolbar",
+                "actionName": "launchTest",
                 "icon": "mobilePreview.png",
                 "alternateIcon": "mobilePreview.png",
                 "title": "Mobile preview",
@@ -76,28 +99,36 @@
                 "name": "studioStartHandler",
                 "title": "studio start handler",
                 "trigger": [
-                    { "event": "onStudioStart" }
+                    {
+                        "event": "onStudioStart"
+                    }
                 ]
             },
             {
                 "name": "solutionOpenedHandler",
                 "title": "solution opened handler",
                 "trigger": [
-                    { "event": "onSolutionOpened" }
+                    {
+                        "event": "onSolutionOpened"
+                    }
                 ]
             },
             {
                 "name": "solutionClosedHandler",
                 "title": "solution closed handler",
                 "trigger": [
-                    { "event": "onSolutionClosed" }
+                    {
+                        "event": "onSolutionClosed"
+                    }
                 ]
             },
             {
                 "name": "solutionBeforeClosingHandler",
                 "title": "solution closed handler",
                 "trigger": [
-                    { "event": "onSolutionBeforeClosing" }
+                    {
+                        "event": "onSolutionBeforeClosing"
+                    }
                 ]
             },
             {
@@ -109,8 +140,8 @@
                 "title": "Preview in Studio"
             },
             {
-                "name": "chromePreview",
-                "title": "Preview in Chrome"
+                "name": "browserPreview",
+                "title": "Preview in Browser"
             },
             {
                 "name": "androidTest",
@@ -156,7 +187,9 @@
                 "name": "menuOpened",
                 "title": "Test Menu Opening",
                 "trigger": [
-                    { "event": "onToolbarButtonMenuOpen" }
+                    {
+                        "event": "onToolbarButtonMenuOpen"
+                    }
                 ]
             },
             {
@@ -168,8 +201,8 @@
                 "title": "Run in Studio"
             },
             {
-                "name": "webChromePreview",
-                "title": "Run in Chrome"
+                "name": "webBrowserPreview",
+                "title": "Run in Browser"
             }
         ],
         "lifetime": "application_lifetime"

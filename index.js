@@ -14,10 +14,10 @@ function initGlobalVariables() {
         options: {
             consoleSilentMode: true
         },
-        onmessage: function(msg) {
+        onmessage: function (msg) {
             ADB_INSTALLED = true;
         },
-        onerror: function(msg) {
+        onerror: function (msg) {
             ADB_INSTALLED = false;
         }
     });
@@ -26,38 +26,38 @@ function initGlobalVariables() {
 function enableTools(enable) {
     "use strict";
 
-    ['launchTest', 'chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+    ['launchTest', 'browserPreview', 'studioPreview', 'androidTest', 'iosTest',
      'launchRun', 'androidRun', 'iosRun',
      'androidEmulate', 'iosEmulate',
      'launchBuild', 'androidBuild', 'iosBuild',
-     'launchWebPreview', 'webStudioPreview', 'webChromePreview'
-    ].forEach(function(elm) {
-        studio.setActionEnabled(elm, !! enable);
-     });
+     'launchWebPreview', 'webStudioPreview', 'webBrowserPreview'
+    ].forEach(function (elm) {
+        studio.setActionEnabled(elm, !!enable);
+    });
 
-     // disable iOS for windows
-     if(os.isWindows) {
+    // disable iOS for windows
+    if (os.isWindows) {
         studio.setActionEnabled('iosEmulate', false);
         studio.setActionEnabled('iosRun', false);
         studio.setActionEnabled('iosBuild', false);
-     }
+    }
 }
 
 function setDefaultConfig() {
     "use strict";
 
-    if(os.isWindows) {
+    if (os.isWindows) {
         studio.checkMenuItem('androidEmulate', true);
     }
 
     // defualt setting for build
     studio.checkMenuItem('androidBuild', true);
-    if(! os.isWindows) {
+    if (!os.isWindows) {
         studio.checkMenuItem('iosBuild', true);
     }
 
     studio.checkMenuItem('studioPreview', true);
-    studio.checkMenuItem('chromePreview', false);
+    studio.checkMenuItem('browserPreview', false);
     studio.checkMenuItem('androidTest', true);
     studio.checkMenuItem('iosTest', true);
 
@@ -66,111 +66,113 @@ function setDefaultConfig() {
 
 function initEnvironnement() {
     // start adb service for mobile project if adb installed and, if a project is a ionic project
-    if(! ADB_INSTALLED) {
+    if (!ADB_INSTALLED) {
         return;
     }
 
-    var file = File( utils.getMobileProjectPath() + '/ionic.project' );
-    if(file.exists) {
-        utils.executeAsyncCmd({ cmd: 'adb start-server' });
+    var file = File(utils.getMobileProjectPath() + '/ionic.project');
+    if (file.exists) {
+        utils.executeAsyncCmd({ 
+            cmd: 'adb start-server'
+        });
     }
 }
 
 function loadPreferences() {
     "use strict";
 
-    ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+    ['browserPreview', 'studioPreview', 'androidTest', 'iosTest',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild',
-     'webStudioPreview', 'webChromePreview'
-    ].forEach(function(elm) {
-        if(os.isWindows && (elm === 'iosEmulate' || elm === 'iosBuild')) {
+     'webStudioPreview', 'webBrowserPreview'
+    ].forEach(function (elm) {
+        if (os.isWindows && (elm === 'iosEmulate' || elm === 'iosBuild')) {
             studio.checkMenuItem(elm, false);
             return;
         }
 
         var elmSetting = studio.extension.getSolutionSetting(elm);
-        if(elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
+        if (elmSetting && (elmSetting === 'true' || elmSetting === 'false')) {
             studio.checkMenuItem(elm, elmSetting === 'true');
         }
-     });
+    });
 }
 
 
 function savePreferences() {
     "use strict";
 
-    ['chromePreview', 'studioPreview', 'androidTest', 'iosTest', 
+    ['browserPreview', 'studioPreview', 'androidTest', 'iosTest',
      'androidEmulate', 'iosEmulate',
      'androidBuild', 'iosBuild',
-     'webStudioPreview', 'webChromePreview'
-    ].forEach(function(elm) {
+     'webStudioPreview', 'webBrowserPreview'
+    ].forEach(function (elm) {
         studio.extension.setSolutionSetting(elm, studio.isMenuItemChecked(elm));
-     });
+    });
 }
 
-actions.studioPreview = function() {
+actions.studioPreview = function () {
     "use strict";
 
     var checked = studio.isMenuItemChecked('studioPreview');
-    studio.checkMenuItem('studioPreview', ! checked);
-    studio.checkMenuItem('chromePreview', checked);
+    studio.checkMenuItem('studioPreview', !checked);
+    studio.checkMenuItem('browserPreview', checked);
     savePreferences();
 };
 
-actions.chromePreview = function() {
+actions.browserPreview = function () {
     "use strict";
 
-    var checked = studio.isMenuItemChecked('chromePreview');
-    studio.checkMenuItem('chromePreview', ! checked);
+    var checked = studio.isMenuItemChecked('browserPreview');
+    studio.checkMenuItem('browserPreview', !checked);
     studio.checkMenuItem('studioPreview', checked);
     savePreferences();
 };
 
-actions.webStudioPreview = function() {
+actions.webStudioPreview = function () {
     "use strict";
 
     var checked = studio.isMenuItemChecked('webStudioPreview');
-    studio.checkMenuItem('webStudioPreview', ! checked);
-    studio.checkMenuItem('webChromePreview', checked);
+    studio.checkMenuItem('webStudioPreview', !checked);
+    studio.checkMenuItem('webBrowserPreview', checked);
     savePreferences();
 };
 
-actions.webChromePreview = function() {
+actions.webBrowserPreview = function () {
     "use strict";
 
-    var checked = studio.isMenuItemChecked('webChromePreview');
-    studio.checkMenuItem('webChromePreview', ! checked);
+    var checked = studio.isMenuItemChecked('webBrowserPreview');
+    studio.checkMenuItem('webBrowserPreview', !checked);
     studio.checkMenuItem('webStudioPreview', checked);
     savePreferences();
 };
 
-['androidTest', 'iosTest', 
+['androidTest', 'iosTest',
  'androidEmulate', 'iosEmulate',
  'androidBuild', 'iosBuild'
-].forEach(function(elm) {
-    actions[elm] = function() {
-        studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
+].forEach(function (elm) {
+    actions[elm] = function () {
+        studio.checkMenuItem(elm, !studio.isMenuItemChecked(elm));
         savePreferences();
     };
 });
 
-['androidRun', 'iosRun'].forEach(function(elm) {
-    actions[elm] = function() {
-        studio.checkMenuItem(elm, ! studio.isMenuItemChecked(elm));
+['androidRun', 'iosRun'].forEach(function (elm) {
+    actions[elm] = function () {
+        studio.checkMenuItem(elm, !studio.isMenuItemChecked(elm));
     };
 });
 
-actions.studioStartHandler = function() {
+actions.studioStartHandler = function () {
     "use strict";
-    
+
     enableTools(false);
     setDefaultConfig();
 
     initGlobalVariables();
 };
 
-actions.solutionOpenedHandler = function() {
+actions.solutionOpenedHandler = function () {
     "use strict";
 
     enableTools(true);
@@ -181,7 +183,7 @@ actions.solutionOpenedHandler = function() {
     initEnvironnement();
 };
 
-actions.solutionClosedHandler = function() {
+actions.solutionClosedHandler = function () {
     "use strict";
 
     enableTools(false);
@@ -190,40 +192,40 @@ actions.solutionClosedHandler = function() {
 
 
 exports.handleMessage = function handleMessage(message) {
-	"use strict";
+    "use strict";
 
-	var actionName = message.action;
+    var actionName = message.action;
 
-	if (!actions.hasOwnProperty(actionName)) {
-		return false;
-	}
-	actions[actionName](message);
+    if (!actions.hasOwnProperty(actionName)) {
+        return false;
+    }
+    actions[actionName](message);
 };
 
-actions.launchTest = function() {
-	"use strict";
+actions.launchTest = function () {
+    "use strict";
 
     var config = {};
 
-    if(studio.isMenuItemChecked('androidTest') && studio.isMenuItemChecked('iosTest')) {
+    if (studio.isMenuItemChecked('androidTest') && studio.isMenuItemChecked('iosTest')) {
         config.selected = 'android-ios';
 
-    } else if(studio.isMenuItemChecked('androidTest')) {
+    } else if (studio.isMenuItemChecked('androidTest')) {
         config.selected = 'android';
 
-    } else if(studio.isMenuItemChecked('iosTest')) {
+    } else if (studio.isMenuItemChecked('iosTest')) {
         config.selected = 'ios';
 
     } else {
         config.selected = 'app';
     }
-    
-    config.chromePreview = studio.isMenuItemChecked('chromePreview');
+
+    config.browserPreview = studio.isMenuItemChecked('browserPreview');
     studio.sendCommand('wakanda-extension-mobile-core.launchTest.' + Base64.encode(JSON.stringify(config)));
 };
 
-actions.launchRun = function() {
-	"use strict";
+actions.launchRun = function () {
+    "use strict";
 
     var config = {
         emulator: {
@@ -235,12 +237,12 @@ actions.launchRun = function() {
             ios: studio.isMenuItemChecked('iosRun')
         }
     };
-    
-    studio.sendCommand('wakanda-extension-mobile-core.launchRun.' + Base64.encode(JSON.stringify( config )));
+
+    studio.sendCommand('wakanda-extension-mobile-core.launchRun.' + Base64.encode(JSON.stringify(config)));
 };
 
-actions.launchBuild = function() {
-	"use strict";
+actions.launchBuild = function () {
+    "use strict";
 
     var config = {
         android: studio.isMenuItemChecked('androidBuild'),
@@ -248,11 +250,11 @@ actions.launchBuild = function() {
         origin: 'wakanda-extension-mobile-test'
     };
 
-    studio.sendCommand('wakanda-extension-mobile-core.launchBuild.' + Base64.encode(JSON.stringify( config )));
+    studio.sendCommand('wakanda-extension-mobile-core.launchBuild.' + Base64.encode(JSON.stringify(config)));
 };
 
 
-actions.solutionBeforeClosingHandler = function() {
+actions.solutionBeforeClosingHandler = function () {
     "use strict";
 
     studio.sendCommand('wakanda-extension-mobile-core.stopProjectIonicSerices');
@@ -260,62 +262,62 @@ actions.solutionBeforeClosingHandler = function() {
     studio.sendCommand('wakanda-extension-mobile-core.stopProjectGulpServices');
 };
 
-actions.enableAction = function(message) {
+actions.enableAction = function (message) {
     "use strict";
 
     studio.setActionEnabled(message.params.action, message.params.enable);
 };
 
-actions.menuOpened = function(message) {
+actions.menuOpened = function (message) {
     var menuId = message.source.data.length && message.source.data[0];
 
-    if(menuId === 'wakanda-extension-mobile-test.configRun') {
+    if (menuId === 'wakanda-extension-mobile-test.configRun') {
         var devices = utils.getConnectedDevices();
-        
-        ['android', 'ios'].forEach(function(platform) {
-            studio.setActionEnabled(platform + 'Run', !! devices[platform].connected);
-            if(! devices[platform].connected) {
+
+        ['android', 'ios'].forEach(function (platform) {
+            studio.setActionEnabled(platform + 'Run', !!devices[platform].connected);
+            if (!devices[platform].connected) {
                 studio.checkMenuItem(platform + 'Run', false);
             }
         });
-    } 
+    }
 };
 
-actions.listenEvent = function(message) {
+actions.listenEvent = function (message) {
 
-    switch(message.params.eventName) {
-        case 'run':
-            studio.setActionEnabled('launchRun', false);
-            break;
-        case 'runFinished':
-            studio.setActionEnabled('launchRun', true);
-            break;
-        case 'build': 
-            studio.setActionEnabled('launchBuild', false);
-            break;
-        case 'buildFinished':
-            studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', [ 'build' ]);            
-            // enable build button
-            studio.setActionEnabled('launchBuild', true);
-            break;
-        case 'webRunWaitConnectToServer':
-        case 'webInstallingNpmModules':
-            studio.setActionEnabled('launchWebPreview', false);
-            break;
-        case 'webInstallingNpmModulesFinished':            
-        case 'webRunConnectedToServer':
-            studio.setActionEnabled('launchWebPreview', true);
-            break;
+    switch (message.params.eventName) {
+    case 'run':
+        studio.setActionEnabled('launchRun', false);
+        break;
+    case 'runFinished':
+        studio.setActionEnabled('launchRun', true);
+        break;
+    case 'build':
+        studio.setActionEnabled('launchBuild', false);
+        break;
+    case 'buildFinished':
+        studio.sendExtensionWebZoneCommand('wakanda-extension-mobile-console', 'changeTab', ['build']);
+        // enable build button
+        studio.setActionEnabled('launchBuild', true);
+        break;
+    case 'webRunWaitConnectToServer':
+    case 'webInstallingNpmModules':
+        studio.setActionEnabled('launchWebPreview', false);
+        break;
+    case 'webInstallingNpmModulesFinished':
+    case 'webRunConnectedToServer':
+        studio.setActionEnabled('launchWebPreview', true);
+        break;
 
     }
 };
 
-actions.launchWebPreview = function(message) {
+actions.launchWebPreview = function (message) {
 
     var config = {
-        webChromePreview: studio.isMenuItemChecked('webChromePreview'),
+        webBrowserPreview: studio.isMenuItemChecked('webBrowserPreview'),
         webStudioPreview: studio.isMenuItemChecked('webStudioPreview')
     };
 
-    studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify( config )));
+    studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify(config)));
 };
