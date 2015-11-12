@@ -1,97 +1,53 @@
 {
-    "extension": {
+    "extension": 
+    {
         "name": "wakanda-extension-mobile-test",
         "version": "1.0.0",
         "description": "tests",
         "icon": "mobilePreview.png",
         "senders": [
             {
-                "location": "studioToolbar",
-                "icon": "arrow-left.png",
-                "tips": "Configure Build",
-                "title": "",
-                "hideMenuButtonArrow": "yes",
-                "menu": [
-                    {
-                        "actionName": "androidBuild"
-                    },
-                    {
-                        "actionName": "iosBuild"
-                    }
-                ]
-            },
-            {
-                "location": "studioToolbar",
-                "actionName": "launchBuild",
+                "location": "studioToolbar", 
+		    	"actionName": "launchBuild",
                 "icon": "mobileBuild.png",
                 "alternateIcon": "mobileBuild_alt.png",
-                "title": "Mobile build",
-                "tips": "Mobile build"
-            },
-            {
-                "location": "studioToolbar",
-                "icon": "arrow-left.png",
-                "tips": "Configure Run",
-                "title": "",
-                "hideMenuButtonArrow": "yes",
-                "id": "configRun",
+                "title": "Build",
+                "tips": "Build Mobile App",
                 "menu": [
-                    {
-                        "actionName": "androidEmulate"
-                    },
-                    {
-                        "actionName": "iosEmulate"
-                    },
-                    {
-                        "separator": {}
-                    },
-                    {
-                        "actionName": "androidRun"
-                    },
-                    {
-                        "actionName": "iosRun"
-                    }
+                    { "actionName": "androidBuild" },
+                    { "actionName": "iosBuild" }
                 ]
             },
             {
-                "location": "studioToolbar",
-                "actionName": "launchRun",
+                "location": "studioToolbar", 
+		    	"actionName": "launchRun",
                 "icon": "mobileRun.png",
                 "alternateIcon": "mobileRun_alt.png",
-                "title": "Mobile run",
-                "tips": "Mobile run"
-            },
-            {
-                "location": "studioToolbar",
-                "icon": "arrow-left.png",
-                "tips": "Configure preview",
-                "title": "",
-                "hideMenuButtonArrow": "yes",
+                "title": "Run",
+                "tips": "Mobile run",
+                "id": "configRun",
                 "menu": [
-                    {
-                        "actionName": "browserPreview"
-                    },
-                    {
-                        "actionName": "studioPreview"
-                    },
-                    {
-                        "separator": {}
-                    },
-                    {
-                        "actionName": "androidTest"
-                    },
-                    {
-                        "actionName": "iosTest"
-                    }
+                    { "actionName": "androidEmulate" },
+                    { "actionName": "iosEmulate" },
+                    { "separator": {} },
+                    { "actionName": "androidRun" },
+                    { "actionName": "iosRun" }
                 ]
             },
             {
-                "location": "studioToolbar",
-                "actionName": "launchTest",
+                "location": "studioToolbar", 
+		    	"actionName": "launchTest",
                 "icon": "mobilePreview.png",
                 "alternateIcon": "mobilePreview.png",
-                "title": "Mobile preview",
-                "tips": "Mobile preview"
+                "title": "Preview",
+                "tips": "Preview Mobile App",
+                "menu": [
+                    { "actionName": "studioPreview" },
+                    { "actionName": "browserPreview" },
+                    { "separator": {} },
+                    { "actionName": "androidTest" },
+                    { "actionName": "iosTest" }
+                ]
             }
         ],
         "actions": [
@@ -99,36 +55,28 @@
                 "name": "studioStartHandler",
                 "title": "studio start handler",
                 "trigger": [
-                    {
-                        "event": "onStudioStart"
-                    }
+                    { "event": "onStudioStart" }
                 ]
             },
             {
                 "name": "solutionOpenedHandler",
                 "title": "solution opened handler",
                 "trigger": [
-                    {
-                        "event": "onSolutionOpened"
-                    }
+                    { "event": "onSolutionOpened" }
                 ]
             },
             {
                 "name": "solutionClosedHandler",
                 "title": "solution closed handler",
                 "trigger": [
-                    {
-                        "event": "onSolutionClosed"
-                    }
+                    { "event": "onSolutionClosed" }
                 ]
             },
             {
                 "name": "solutionBeforeClosingHandler",
                 "title": "solution closed handler",
                 "trigger": [
-                    {
-                        "event": "onSolutionBeforeClosing"
-                    }
+                    { "event": "onSolutionBeforeClosing" }
                 ]
             },
             {
@@ -137,19 +85,19 @@
             },
             {
                 "name": "studioPreview",
-                "title": "Preview in Studio"
+                "title": "Preview in New Tab"
             },
             {
                 "name": "browserPreview",
-                "title": "Preview in Browser"
+                "title": "Preview in Web Browser"
             },
             {
                 "name": "androidTest",
-                "title": "Android"
+                "title": "Preview Android App"
             },
             {
                 "name": "iosTest",
-                "title": "iOS"
+                "title": "Preview iOS App"
             },
             {
                 "name": "launchRun",
@@ -157,19 +105,19 @@
             },
             {
                 "name": "androidRun",
-                "title": "Android devices"
+                "title": "Run on Android Devices"
             },
             {
                 "name": "iosRun",
-                "title": "iOS devices"
+                "title": "Run on iOS Devices"
             },
             {
                 "name": "androidEmulate",
-                "title": "Android emulator"
+                "title": "Run on Android Emulator"
             },
             {
                 "name": "iosEmulate",
-                "title": "iOS emulator"
+                "title": "Run on iOS Simulator"
             },
             {
                 "name": "launchBuild",
@@ -177,19 +125,17 @@
             },
             {
                 "name": "androidBuild",
-                "title": "Android"
+                "title": "Build Android App"
             },
             {
                 "name": "iosBuild",
-                "title": "iOS"
+                "title": "Build iOS App"
             },
             {
                 "name": "menuOpened",
                 "title": "Test Menu Opening",
                 "trigger": [
-                    {
-                        "event": "onToolbarButtonMenuOpen"
-                    }
+                    { "event": "onToolbarButtonMenuOpen" }
                 ]
             },
             {
@@ -198,11 +144,11 @@
             },
             {
                 "name": "webStudioPreview",
-                "title": "Run in Studio"
+                "title": "Run in New Tab"
             },
             {
                 "name": "webBrowserPreview",
-                "title": "Run in Browser"
+                "title": "Run in Web Browser"
             }
         ],
         "lifetime": "application_lifetime"
