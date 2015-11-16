@@ -46,13 +46,15 @@ function enableTools(enable) {
 function setDefaultConfig() {
     "use strict";
 
-    if (os.isWindows) {
+     if (os.isWindows) {
         studio.checkMenuItem('androidEmulate', true);
+        studio.checkMenuItem('androidBuild', true);
     }
 
-    // defualt setting for build
-    studio.checkMenuItem('androidBuild', true);
+
     if (!os.isWindows) {
+	
+        studio.checkMenuItem('iosEmulate', true);
         studio.checkMenuItem('iosBuild', true);
     }
 
@@ -140,7 +142,7 @@ actions.webStudioPreview = function () {
 
 actions.webBrowserPreview = function () {
     "use strict";
-
+  
     var checked = studio.isMenuItemChecked('webBrowserPreview');
     studio.checkMenuItem('webBrowserPreview', !checked);
     studio.checkMenuItem('webStudioPreview', checked);
@@ -318,6 +320,6 @@ actions.launchWebPreview = function (message) {
         webBrowserPreview: studio.isMenuItemChecked('webBrowserPreview'),
         webStudioPreview: studio.isMenuItemChecked('webStudioPreview')
     };
-
+   
     studio.sendCommand('wakanda-extension-mobile-core.launchWebPreview.' + Base64.encode(JSON.stringify(config)));
 };
