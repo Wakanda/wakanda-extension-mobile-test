@@ -305,9 +305,10 @@ actions.listenEvent = function (message) {
     case 'webRunWaitConnectToServer':
     case 'webInstallingNpmModules':
         studio.setActionEnabled('launchWebPreview', false);
-        break;
+        break;        
     case 'webInstallingNpmModulesFinished':
     case 'webRunConnectedToServer':
+    case 'startServerAborted':
         studio.setActionEnabled('launchWebPreview', true);
         break;
 
