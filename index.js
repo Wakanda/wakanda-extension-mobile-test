@@ -56,6 +56,8 @@ function setDefaultConfig() {
 	
         studio.checkMenuItem('iosEmulate', true);
         studio.checkMenuItem('iosBuild', true);
+        studio.checkMenuItem('androidEmulate', false);
+        studio.checkMenuItem('androidBuild', false);
     }
 
     studio.checkMenuItem('studioPreview', true);
