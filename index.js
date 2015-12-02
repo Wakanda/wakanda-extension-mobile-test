@@ -318,7 +318,6 @@ actions.listenEvent = function (message) {
         break;        
     case 'webInstallingNpmModulesFinished':
     case 'webRunConnectedToServer':
-    case 'startServerAborted':
         studio.setActionEnabled('launchWebPreview', true);
         break;
     case 'startServerAborted':
