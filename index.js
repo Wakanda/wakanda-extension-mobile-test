@@ -291,10 +291,20 @@ actions.listenEvent = function (message) {
 
     switch (message.params.eventName) {
     case 'run':
+    case 'mobileRunWaitConnectToServer':
         studio.setActionEnabled('launchRun', false);
         break;
     case 'runFinished':
+    case 'mobileRunConnectedToServer':
+    case 'startServerAborted':
         studio.setActionEnabled('launchRun', true);
+        break;
+    case 'mobileTestWaitConnectToServer':
+        studio.setActionEnabled('launchTest', false);
+        break;
+    case 'mobileTestConnectedToServer':
+    case 'startServerAborted':
+        studio.setActionEnabled('launchTest', true);
         break;
     case 'build':
         studio.setActionEnabled('launchBuild', false);
