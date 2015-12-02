@@ -296,14 +296,12 @@ actions.listenEvent = function (message) {
         break;
     case 'runFinished':
     case 'mobileRunConnectedToServer':
-    case 'startServerAborted':
         studio.setActionEnabled('launchRun', true);
         break;
     case 'mobileTestWaitConnectToServer':
         studio.setActionEnabled('launchTest', false);
         break;
     case 'mobileTestConnectedToServer':
-    case 'startServerAborted':
         studio.setActionEnabled('launchTest', true);
         break;
     case 'build':
@@ -322,6 +320,11 @@ actions.listenEvent = function (message) {
     case 'webRunConnectedToServer':
     case 'startServerAborted':
         studio.setActionEnabled('launchWebPreview', true);
+        break;
+    case 'startServerAborted':
+        studio.setActionEnabled('launchWebPreview', true);
+        studio.setActionEnabled('launchTest', true);
+        studio.setActionEnabled('launchRun', true);
         break;
 
     }
