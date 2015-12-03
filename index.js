@@ -291,10 +291,18 @@ actions.listenEvent = function (message) {
 
     switch (message.params.eventName) {
     case 'run':
+    case 'mobileRunWaitConnectToServer':
         studio.setActionEnabled('launchRun', false);
         break;
     case 'runFinished':
+    case 'mobileRunConnectedToServer':
         studio.setActionEnabled('launchRun', true);
+        break;
+    case 'mobileTestWaitConnectToServer':
+        studio.setActionEnabled('launchTest', false);
+        break;
+    case 'mobileTestConnectedToServer':
+        studio.setActionEnabled('launchTest', true);
         break;
     case 'build':
         studio.setActionEnabled('launchBuild', false);
@@ -310,8 +318,12 @@ actions.listenEvent = function (message) {
         break;        
     case 'webInstallingNpmModulesFinished':
     case 'webRunConnectedToServer':
+        studio.setActionEnabled('launchWebPreview', true);
+        break;
     case 'startServerAborted':
         studio.setActionEnabled('launchWebPreview', true);
+        studio.setActionEnabled('launchTest', true);
+        studio.setActionEnabled('launchRun', true);
         break;
 
     }
