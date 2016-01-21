@@ -10,7 +10,6 @@
                 "location": "studioToolbar", 
                 "actionName": "launchBuild",
                 "icon": "mobileBuild.png",
-                "alternateIcon": "mobileBuild_alt.png",
                 "title": "Build",
                 "tips": "Build Mobile App",
                 "menu": [
@@ -22,7 +21,6 @@
                 "location": "studioToolbar", 
                 "actionName": "launchRun",
                 "icon": "mobileRun.png",
-                "alternateIcon": "mobileRun_alt.png",
                 "title": "Run",
                 "tips": "Run Mobile App",
                 "id": "configRun",
@@ -37,7 +35,6 @@
                 "location": "studioToolbar", 
                 "actionName": "launchTest",
                 "icon": "mobilePreview.png",
-                "alternateIcon": "mobilePreview.png",
                 "title": "Preview",
                 "tips": "Preview Mobile App",
                 "menu": [
@@ -52,7 +49,6 @@
                 "location": "studioToolbar", 
                 "actionName": "launchWebPreview",
                 "icon": "webRun.png",
-                "alternateIcon": "webRun_alt.png",
                 "title": "Run Page",
                 "tips": "Run Web Page",
                 "menu": [
