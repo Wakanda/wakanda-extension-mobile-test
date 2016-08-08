@@ -65,15 +65,23 @@ function setDefaultConfig() {
 }
 
 function initEnvironnement() {
-    // start adb service for mobile project if adb installed and, if a project is a ionic project
-    if (!ADB_INSTALLED) {
+    executeAdbCommand('start-server');
+}
+
+function stopEnvironnement() {
+    executeAdbCommand('kill-server');
+}
+
+function executeAdbCommand(command) {
+    // execute adb command if adb installed
+    if (!ADB_INSTALLED || !command || typeof command !== 'string') {
         return;
     }
-
+    // and if project is a ionic project
     var file = File(utils.getMobileProjectPath() + '/ionic.project');
     if (file.exists) {
         utils.executeAsyncCmd({ 
-            cmd: 'adb start-server'
+            cmd: 'adb ' + command.replace(/[;&|<>]/g, '').trim()
         });
     }
 }
@@ -225,10 +233,9 @@ actions.launchBuild = function () {
 };
 actions.solutionBeforeClosingHandler = function () {
     "use strict";
-
-    studio.sendCommand('wakanda-extension-mobile-core.stopProjectIonicSerices');
-
-    studio.sendCommand('wakanda-extension-mobile-core.stopProjectGulpServices');
+	stopEnvironnement();
+    studio.sendCommand('wakanda-extension-mobile-core.stopProjectIonicServices');
+    studio.sendCommand('wakanda-extension-mobile-core.stopNpmServeServices');
 };
 actions.enableAction = function (message) {
     "use strict";
