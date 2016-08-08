@@ -62,6 +62,19 @@ function setDefaultConfig() {
     studio.checkMenuItem('androidTest', true);
     studio.checkMenuItem('iosTest', true);
     studio.checkMenuItem('webStudioPreview', true);
+
+    // temporary disable preview in studio
+    if(os.isWindows) {
+        studio.setActionEnabled('studioPreview', false);
+        studio.setActionEnabled('webStudioPreview', false);
+        studio.setActionEnabled('browserPreview', false);
+        studio.setActionEnabled('webBrowserPreview', false);
+
+        studio.checkMenuItem('studioPreview', false);
+        studio.checkMenuItem('webStudioPreview', false);
+        studio.checkMenuItem('browserPreview', true);
+        studio.checkMenuItem('webBrowserPreview', true);
+    }
 }
 
 function initEnvironnement() {
